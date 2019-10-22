@@ -6,7 +6,7 @@ import SizeSetting from './components/SizeSetting';
 import Reset from './components/Reset';
 import Content from './components/Content';
 
-class AppColor extends Component {
+class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -47,4 +47,4 @@ class AppColor extends Component {
     }
 }
 
-export default AppColor
+export default App

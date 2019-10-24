@@ -1,23 +1,25 @@
 import React, {Component} from 'react';
 
-class SizeSetting extends Component{
+class Reset extends Component{
     constructor(props) {
         super(props);
-        this.onClick = this.onClick.bind(this);
+        this.state = {
+            color: 'red',
+            fontSize: 10,
+        }
     }
 
-    onSetColor = () => {
-    }
+    reset = () => {
+        this.props.onSet(this.state)
+    };
 
     render() {
         return (
             <div>
-                <button onClick={this.onMinus}>giam size</button>
-                <button onClick={this.onPlus}>tăng size</button>
                 <button onClick={this.reset}>reset</button>
             </div>
         );
     }
 }
 
-export default SizeSetting;
+export default Reset;

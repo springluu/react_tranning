@@ -1,50 +1,93 @@
 import React, {Component} from 'react';
-import './App.css';
 import Header from './components/Header';
-import ColorPicker from './components/ColorPicker';
-import SizeSetting from './components/SizeSetting';
-import Reset from './components/Reset';
-import Content from './components/Content';
+import reducer from "./reducers";
+import { createStore } from "redux";
 
-class AppColor extends Component {
+const initialState = { tech: "React " };
+const store = createStore(reducer, initialState);
+
+class App extends Component {
+    //state = store.getState();
     constructor(props) {
         super(props);
         this.state = {
-            color: 'red',
-            fontSize: 10,
-        };
+            list: [],
+            id: 1
+        }
     }
-    onSetColor = (params) =>{
-        this.setState({
-            color: params
-        })
+
+    add =()=> {
+        // this.setState( {
+        //     list : [...this.state.list, {id: this.state.id, name: 'name1'}],
+        //     id: this.state.id + 1
+        // });
+
+        // this.setState(prevState => ({
+        //     list: [...prevState.list, {id: this.state.id, name: 'name1'}],
+        //     id: prevState.id + 1
+        // }))
+
+        // this.setState({
+        //     list: this.state.list.concat({id: this.state.id, name: 'name1'}),
+        //     id: this.state.id + 1
+        // })
+
+        this.setState(prevState => ({
+            list: prevState.list.concat({id: this.state.id, name: 'name1'}),
+            id: prevState.id + 1
+        }))
+
+        console.log()
     };
 
-    onChangeSize = (params) =>{
-        this.setState({
-            fontSize: params
-        })
-    };
+    delete(id) {
+        let xxx = this.state.list;
 
-    setDefault = (params) =>{
-        this.setState({
-            color: params.color,
-            fontSize: params.fontSize,
-        })
-    };
+        xxx = xxx.filter((item, key)=>{
+            return item.id !== id;
+        });
+
+        this.setState( {
+            list : xxx
+        });
+    }
+
+    inputChange =(e)=> {
+        let name = e.target.name;
+        let value = e.target.value;
+        this.setState( {
+            [name] : value
+        });
+
+        console.log(this.state)
+    }
+
+    search() {}
+
+    componentWillMount(){}
 
     render() {
         return (
-            <div className="App">
-                <Header/>
+            <div>
+                <Header tech={store.getState().tech}/>
                 <hr/>
-                <ColorPicker color={this.state.color} onReColor={this.onSetColor}/>
-                <SizeSetting fontSize={this.state.fontSize} onChangeSize={this.onChangeSize}/>
-                <Reset onSet={this.setDefault}/>
-                <Content color={this.state.color} fontSize={this.state.fontSize}/>
+                <div className={'form-search'}>
+                    <input type={'text'} name={'name-search'} onChange={this.inputChange}/>
+                    <button onClick={this.search}>Search</button>
+                </div>
+                <button onClick={this.add}>Them moi cong viec</button>
+                {this.state.list.map((item, key) => {
+                    return (
+                        <div key={key}>
+                            <span>{item.id}</span>
+                            <span>{item.name}</span>
+                            <button onClick={()=>{this.delete(item.id)}}>delete</button>
+                        </div>
+                    )
+                })}
             </div>
         )
     }
 }
 
-export default AppColor
+export default App

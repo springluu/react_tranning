@@ -1,22 +1,20 @@
 import React, {Component} from 'react';
 
-class SizeSetting extends Component{
-    constructor(props) {
-        super(props);
-        this.onClick = this.onClick.bind(this);
-    }
-
-    onSetColor = () => {
-    }
+class Content extends Component{
+    setStyle = () => {
+        return{
+            color: this.props.color,
+            fontSize: this.props.fontSize,
+        }
+    };
 
     render() {
         return (
             <div>
-                <button onClick={this.onMinus}>giam size</button>
-                <button onClick={this.onPlus}>tăng size</button>
+                <h1 style={this.setStyle()}>hello world!</h1>
             </div>
         );
     }
 }
 
-export default SizeSetting;
+export default Content;

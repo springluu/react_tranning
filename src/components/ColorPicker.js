@@ -1,28 +1,39 @@
 import React, {Component} from 'react';
 
-class Product extends Component{
+class ColorPicker extends Component{
     constructor(props) {
         super(props);
-        this.onClick = this.onClick.bind(this);
+        this.state = {
+            colors: ['blue', 'red', 'green', 'yellow']
+        }
     }
 
-    onClick () {
-        alert(this.props.name)
-    }
+    showColor = (color) => {
+        return {
+            backgroundColor: color,
+            marginRight: 10,
+        }
+    };
+
+    setColor(color) {
+        this.props.onReColor(color)
+    };
 
     render() {
+        let colors = this.state.colors.map((color, index)=>{
+            return (
+                <span
+                    className={this.props.color === color ? 'active' : ''} key={index} style={this.showColor(color)}
+                    onClick={() => {this.setColor(color)}}
+                >{color}</span>
+            );
+        });
         return (
             <div>
-                {this.props.children}
-                <h5>{this.props.name}</h5>
-                <span>{this.props.price}$</span>
-                <div>
-                    <button className={'btn'} onClick={ this.onClick }> Action </button>
-                </div>
-                ---------------------------
+                {colors}
             </div>
         );
     }
 }
 
-export default Product;
+export default ColorPicker;
